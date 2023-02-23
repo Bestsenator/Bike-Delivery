@@ -1,0 +1,101 @@
+{% load static %}
+{% if isMobile == True %}
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="javascript:void(0)">Menu</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        GENERAL
+                    </a><ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <li><a class="dropdown-item" href=""><i class="menu-icon tf-icons bx bx-home-circle"></i> Home</a></li>
+                        <li><a class="dropdown-item" href=""><i class='menu-icon tf-icons bx bx-transfer-alt'></i> Convertor</a></li>
+                    </ul>
+                    </li>
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        MANAGE ACCOUNT
+                    </a><ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <li><a class="dropdown-item" href=""><i class='menu-icon tf-icons bx bx-user'></i> Portal</a></li>
+                    </ul>
+                    </li>
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        MISC
+                    </a><ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <li><a class="dropdown-item" href=""><i class="menu-icon tf-icons bx bx-support"></i> Support</a></li>
+                        <li><a class="dropdown-item" href=""><i class="menu-icon tf-icons bx bx-file"></i> About Us</a></li>
+                    </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% else %}
+    <!-- Menu -->
+    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+              <div class="app-brand demo">
+                <a href="" class="app-brand-link">
+                  <span class="app-brand-logo demo">
+                    <img src="{% static 'img/Logo.png' %}" width="100" height="75" alt="Logo">
+                  </span>
+                  <span class="app-brand-text menu-text fw-bolder ">Motorella</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                  <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+              </div>
+
+              <div class="menu-inner-shadow"></div>
+
+              <ul class="menu-inner py-1">
+                <!-- Dashboard -->
+                <li class="menu-header small text-uppercase" style="font-size: 10px;">
+                  <span class="menu-header-text">General</span>
+                </li>
+                <li class="menu-item">
+                  <a href="" class="menu-link ">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Analytics">Home</div>
+                  </a>
+                </li>
+                <li class="menu-header small text-uppercase">
+                  <span class="menu-header-text" style="font-size: 10px;">Manage Account</span>
+                </li>
+                <li class="menu-item {{ PortalMain }}">
+                  <a href="" class="menu-link ">
+                    <i class='menu-icon tf-icons bx bx-user'></i>
+                    <div data-i18n="Analytics">Portal</div>
+                  </a>
+                </li>
+
+
+                <!-- Misc -->
+                <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
+                <li class="menu-item">
+                  <a
+                    href="#"
+                    target="_blank"
+                    class="menu-link {{ SupportMain }}"
+                  >
+                    <i class="menu-icon tf-icons bx bx-support"></i>
+                    <div data-i18n="Support">Support</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a
+                    href="#"
+                    target="_blank"
+                    class="menu-link {{ AboutUsMain }}"
+                  >
+                    <i class="menu-icon tf-icons bx bx-file"></i>
+                    <div data-i18n="Documentation">About Us</div>
+                  </a>
+                </li>
+              </ul>
+            </aside>
+    <!-- / Menu -->
+{% endif %}

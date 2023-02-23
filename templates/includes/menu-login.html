@@ -1,0 +1,171 @@
+{% load static %}
+{% if isMobile == True %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="javascript:void(0)">Menu</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        General
+                    </a><ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <li><a class="dropdown-item" href="{% url 'index-main' %}"><i class="menu-icon tf-icons bx bx-home-circle"></i> Home</a></li>
+                        <li><a class="dropdown-item" href="{% url 'convertor-main' %}"><i class='menu-icon tf-icons bx bx-transfer-alt'></i> Convertor</a></li>
+                    </ul>
+                    </li>
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Portal
+                    </a><ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <li><a class="dropdown-item" href="{% url 'portal-main' %}">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="{% url 'portal-profile' %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'portal-reports' %}">Reports</a></li>
+                    </ul>
+                    </li>
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Instagram Account
+                    </a><ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <li><a class="dropdown-item" href="{% url 'portal-main' %}">Post</a></li>
+                        <li><a class="dropdown-item" href="{% url 'portal-main' %}">Story</a></li>
+                        <li><a class="dropdown-item" href="{% url 'portal-main' %}">Scheduler</a></li>
+                    </ul>
+                    </li>
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        MISC
+                    </a><ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <li><a class="dropdown-item" href=""><i class="menu-icon tf-icons bx bx-support"></i> Support</a></li>
+                        <li><a class="dropdown-item" href=""><i class="menu-icon tf-icons bx bx-file"></i> About Us</a></li>
+                    </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% else %}
+    <!-- Menu -->
+    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+              <div class="app-brand demo">
+                <a href="{% url 'index-main' %}" class="app-brand-link">
+                  <span class="app-brand-logo demo">
+                    <img src="{% static 'img/LogoDark.png' %}" width="50" height="50" alt="Logo">
+                  </span>
+                  <span class="app-brand-text demo menu-text fw-bolder ">onista</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                  <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+              </div>
+
+              <div class="menu-inner-shadow"></div>
+
+              <ul class="menu-inner py-1">
+                <!-- Dashboard -->
+                <li class="menu-header small text-uppercase" style="font-size: 10px;">
+                  <span class="menu-header-text">General</span>
+                </li>
+                <li class="menu-item {{ IndexMain }}">
+                  <a href="{% url 'index-main' %}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Analytics">Home</div>
+                  </a>
+                </li>
+                <li class="menu-item {{ ConvertorMain }}">
+                  <a href="{% url 'convertor-main' %}" class="menu-link ">
+                    <i class='menu-icon tf-icons bx bx-transfer-alt'></i>
+                    <div data-i18n="Analytics">Convertor</div>
+                  </a>
+                </li>
+
+                <li class="menu-header small text-uppercase">
+                  <span class="menu-header-text" style="font-size: 10px;">Manage Account</span>
+                </li>
+
+                <li class="menu-item {{ ReportsActive }} {{ ProfileActive }} {{ DashboardActive }}" >
+                  <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Portal</div>
+                  </a>
+                  <ul class="menu-sub">
+                    <li class="menu-item {{ DashboardActive }}">
+                      <a href="{% url 'portal-main' %}" class="menu-link">
+                        <div data-i18n="Account">Dashboard</div>
+                      </a>
+                    </li>
+                    <li class="menu-item {{ ProfileActive }}">
+                      <a href="{% url 'portal-profile' %}" class="menu-link">
+                        <div data-i18n="Notifications">Profile</div>
+                      </a>
+                    </li>
+                    <li class="menu-item {{ ReportsActive }}">
+                      <a href="{% url 'portal-reports' %}" class="menu-link">
+                        <div data-i18n="Connections">Reports</div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="menu-item {{ AccountsActive }}  {{ PostActive }}" style="">
+                  <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Instagram Account</div>
+                  </a>
+                  <ul class="menu-sub">
+                    <li class="menu-item {{ AccountsActive }}">
+                      <a href="{% url 'portal-accounts' %}" class="menu-link">
+                        <div data-i18n="Account">Accounts</div>
+                      </a>
+                    </li>
+                    <li class="menu-item {{ PostActive }}">
+                      <a href="{% url 'portal-post' %}" class="menu-link">
+                        <div data-i18n="Account">Post</div>
+                      </a>
+                    </li>
+                    <li class="menu-item {{ Active }}">
+                      <a href="{% url 'portal-profile' %}" class="menu-link">
+                        <div data-i18n="Notifications">Story</div>
+                      </a>
+                    </li>
+                    <li class="menu-item {{ Active }}">
+                      <a href="{% url 'portal-reports' %}" class="menu-link">
+                        <div data-i18n="Connections">Scheduler</div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+
+                <!-- Misc -->
+                <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
+                <li class="menu-item">
+                  <a
+                    href="#"
+                    target="_blank"
+                    class="menu-link {{ SupportMain }}"
+                  >
+                    <i class="menu-icon tf-icons bx bx-support"></i>
+                    <div data-i18n="Support">Support</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a
+                    href="#"
+                    target="_blank"
+                    class="menu-link {{ AboutUsMain }}"
+                  >
+                    <i class="menu-icon tf-icons bx bx-file"></i>
+                    <div data-i18n="Documentation">About Us</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                   <div>
+                       <a href="{% url 'logout' %}" class="menu-link btn btn-sm ">
+                           <i class="bx bx-log-out-circle"></i>
+                           Logout
+                       </a>
+                   </div>
+                </li>
+              </ul>
+            </aside>
+    <!-- / Menu -->
+{% endif %}
