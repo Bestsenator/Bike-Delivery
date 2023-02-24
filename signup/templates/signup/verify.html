@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Verify
+{% endblock %}
+
+{% block header_ref %}
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/page-auth.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- Content -->
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner py-4">
+          <!-- Forgot Password -->
+          <div class="card">
+            <div class="card-body">
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                <a href="{% url 'index-main' %}" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo" style="width: 100%">
+                    <img src="{% static 'img/logo.png' %}" alt="" style="width: 50%;margin: 0 25%;" >
+                  </span>
+                </a>
+              </div>
+              <!-- /Logo -->
+              <h4 class="mb-2">Your Account is Locked 🔒</h4>
+              <p class="mb-4">Please enter the code sent to <strong>{{ Email }}</strong></p>
+              {% if SendCodeSuccess == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                      The code was sent to {{ Email }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if CodeNotExpire == True %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The code sent has not yet expired.
+                      Each code is valid for 5 minutes.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if RefreshPage == True %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Please refresh page.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 401 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Please refresh page and try again.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 403 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Input's is Incomplete. Please refresh and try again.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 404 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Code has Expire.Use Resend Code.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 405 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Code is Incorrect.Please try again.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              <p><a href="">Resend Code</a></p>
+              <form id="formAuthentication" class="mb-3" action="{% url 'signup-verifyCheck' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="SuNumber" value="{{ SuNumber }}">
+                <div class="mb-3">
+                  <label for="code" class="form-label">CODE</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="code"
+                    name="Code"
+                    placeholder="Enter Code"
+                    autofocus maxlength="5" required
+                  />
+                </div>
+                <button class="btn btn-primary d-grid w-100">Verify Account</button>
+
+              </form>
+              <div class="text-center">
+                <a href="{% url 'index-main' %}" class="d-flex align-items-center justify-content-center">
+                  <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                  Back to Home
+                </a>
+              </div>
+              <br>
+              <div class="text-center">
+                  <a href="" class="btn btn-danger btn-buy-now"><i class="bx bx-log-out-circle"></i> Logout</a>
+              </div>
+            </div>
+          </div>
+          <!-- /Forgot Password -->
+        </div>
+      </div>
+    </div>
+    <!-- / Content -->
+{% endblock %}

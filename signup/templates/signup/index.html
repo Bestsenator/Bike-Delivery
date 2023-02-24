@@ -1,10 +1,288 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Signup
+{% endblock %}
+{% block header_ref %}
+    <!-- Page -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/page-auth.css' %}" />
+    <script>
+        let keyPass = 0;
+        let keyTerm = 0;
+        function verifyPassword(){
+            let text = document.getElementById('password').value;
+            if(/[0-9]/.test(text) === false){
+                console.log('no');
+                document.getElementById('resAuth-containNumber').innerHTML = '* The password does not contain numbers.';
+            }
+            else{
+                document.getElementById('resAuth-containNumber').innerHTML = '';
+            }
+            if(text.length < 8 || text.length > 32){
+                document.getElementById('resAuth-length').innerHTML = '* The password size is not correct.';
+            }
+            else{
+                document.getElementById('resAuth-length').innerHTML = '';
+            }
+            if(/[A-Z]/.test(text) === true && /[a-z]/.test(text) === true){
+                document.getElementById('resAuth-upperLower').innerHTML = '';
+            }
+            else{
+                document.getElementById('resAuth-upperLower').innerHTML = '* Upper and lower case letters are not used.';
+            }
+            let format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+            if(format.test(text) === false){
+                document.getElementById('resAuth-special').innerHTML = '* No special characters are used in the password.';
+            }
+            else{
+                document.getElementById('resAuth-special').innerHTML = '';
+            }
+        }
+        function verifyRetypePassword(){
+            let password = document.getElementById('password').value;
+            let retypePassword = document.getElementById('retypePassword').value;
+            if(password.length !== 0){
+                if(password !== retypePassword){
+                document.getElementById('resAuth-retypePassword').innerHTML = '* Password and RetypePassword do not match.';
+                document.getElementById('resAuth-retypePassword').style.color = 'red';
+                document.getElementById('RegisterBtn').setAttribute('disabled','');
+                }
+                else{
+                    document.getElementById('resAuth-retypePassword').innerHTML = 'Password and RetypePassword match';
+                    document.getElementById('resAuth-retypePassword').style.color = 'green';
+                    keyPass = 1;
+                    if(keyPass === 1 && keyTerm === 1){
+                        document.getElementById('RegisterBtn').removeAttribute('disabled');
+                    }
+                }
+            }
+        }
+        window.onload = function() {
+          document.getElementById('RegisterBtn').setAttribute('disabled', '');
+        };
+        function onlyNumberKey(evt) {
+            // Only ASCII character in that range allowed
+            let ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            return !(ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57));
+        }
+        function verifyKey(){
+            if(document.getElementById('TermsConditions').checked === true){
+                console.log(keyPass, keyTerm);
+                keyTerm = 1;
+                if(keyPass === 1 && keyTerm === 1){
+                        document.getElementById('RegisterBtn').removeAttribute('disabled');
+                    }
+                else {
+                    document.getElementById('RegisterBtn').setAttribute('disabled', '');
+                }
+            }
+            else {
+                keyTerm = 0;
+                document.getElementById('RegisterBtn').setAttribute('disabled', '');
+            }
+        }
+    </script>
+    <style>
+        .resAuth {
+            color: red;
+        }
+    </style>
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <!-- Content -->
+
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <!-- Register Card -->
+          <div class="card">
+            <div class="card-body">
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                <a href="index.html" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo" style="width: 100%">
+                    <img src="{% static 'img/logo.png' %}" alt="" style="width: 50%;margin: 0 25%;" >
+                  </span>
+                </a>
+              </div>
+              <!-- /Logo -->
+              <h4 class="mb-2">Adventure starts here 🚀</h4>
+              <p class="mb-4">Make your app management easy and fun!</p>
+              {% if Status == 401 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Please refresh page and try again.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 402 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Input's is Incomplete. Please refresh and try again. <a href="{% url 'signup-main' %}">Refresh</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 403 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Input format is invalid.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 404 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Password and RetypePassword do not match.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 405 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Password format is invalid.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 406 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The email entered has already been registered.Please try another email, or sign in with the desired email.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 407 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The phone or country code entered is wrong, please check the values and try again.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+
+              <form id="formAuthentication" class="mb-3" action="{% url 'signup-check' %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="name" name="Name" placeholder="Enter your name" autofocus required/>
+                </div>
+                <div class="mb-3">
+                  <label for="family" class="form-label">Family</label>
+                  <input type="text" class="form-control" id="family" name="Family" placeholder="Enter your family" required/>
+                </div>
+                <div class="mb-3 ">
+                    <label class="form-label" for="phoneNumber">Phone</label>
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text" style="padding: 7px 5px;">+</span>
+                        <input type="text" id="codeCountry" name="CountryCode" class="form-control col-md-1"
+                               placeholder="98" required maxlength="3" style="max-width: 32px;" pattern="[0-9]+" onkeypress="return onlyNumberKey(event)">
+                        <input type="text" id="phoneNumber" name="Phone" class="form-control" onkeypress="return onlyNumberKey(event)"
+                               placeholder="912 3456 789" required maxlength="10" pattern="[0-9]+">
+                    </div>
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="text" class="form-control" id="email" name="Email" placeholder="Enter your email" required/>
+                </div>
+                <div class="mb-3 form-password-toggle">
+                  <label class="form-label" for="password">Password</label>
+                  <div class="input-group input-group-merge">
+                    <input type="password" id="password" class="form-control" name="Password" required onkeyup="verifyPassword();verifyRetypePassword()"
+                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                           aria-describedby="password" maxlength="32"/>
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  </div>
+                  <small id="resAuth-containNumber" class="d-block resAuth"></small>
+                  <small id="resAuth-upperLower" class="d-block resAuth"></small>
+                  <small id="resAuth-special" class="d-block resAuth"></small>
+                  <small id="resAuth-length" class="d-block resAuth"></small>
+                </div>
+                <div class="mb-3 form-password-toggle">
+                  <label class="form-label" for="retypePassword">Retype Password</label>
+                  <div class="input-group input-group-merge">
+                    <input type="password" id="retypePassword" class="form-control" name="RetypePassword" required onkeyup="verifyRetypePassword()"
+                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                           aria-describedby="password" maxlength="32" />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  </div>
+                  <small id="resAuth-retypePassword" class="d-block"></small>
+                </div>
+                <ul>
+                    <li class="text-muted mb-0"><small>At least 8 characters—the more characters, the better</small></li>
+                    <li class="text-muted mb-0"><small>A mixture of both uppercase and lowercase letters</small></li>
+                    <li class="text-muted mb-0"><small>A mixture of letters and numbers </small></li>
+                    <li class="text-muted mb-0"><small>Inclusion of at least one special character, e.g.,! @ # ? ]</small></li>
+                </ul>
+
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="TermsConditions" name="Terms" required onchange="verifyKey();"/>
+                    <label class="form-check-label" for="TermsConditions">
+                      I agree to
+                        <a href="javascript:void(0); " data-bs-target="#Terms" data-bs-toggle="modal" >privacy policy & terms</a>
+                    </label>
+                  </div>
+                </div>
+                <button class="btn btn-primary d-grid w-100" id="RegisterBtn">Sign up</button>
+              </form>
+
+              <p class="text-center">
+                <span>Already have an account?</span>
+                <a href="{% url 'login-main' %}">
+                  <span>Sign in instead</span>
+                </a>
+              </p>
+              <p class="text-center">
+                <span>Or back to Home?</span>
+                <a href="{% url 'index-main' %}">
+                  <span>Home</span>
+                </a>
+              </p>
+            </div>
+          </div>
+          <!-- Register Card -->
+        </div>
+      </div>
+    </div>
+    <!-- / Content -->
+
+
+    <!--Start Modal Terms -->
+    <div class="modal fade" id="Terms" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-simple modal-enable-otp modal-dialog-centered" >
+              <div class="modal-content p-3 p-md-3">
+                <div class="modal-body">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="float: right"></button>
+
+                  <div class="text-center mb-4">
+                    <h3 class="mb-4 secondary-font">Privacy policy & Terms</h3>
+                  </div>
+                  <div class="card accordion-item">
+                      <h2 class="accordion-header" id="headingOne">
+                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="false" aria-controls="accordionOne">
+                          First Policy :
+                        </button>
+                      </h2>
+
+                      <div id="accordionOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body">
+                          Be sure to introduce the website to your friends, our goal is to improve the ease of work for users.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card accordion-item">
+                      <h2 class="accordion-header" id="headingOne">
+                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="false" aria-controls="accordionOne">
+                          Second Policy :
+                        </button>
+                      </h2>
+
+                      <div id="accordionTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body">
+                          The use of the website and its facilities is only in a healthy way and away from legal and human tricks.
+                        </div>
+                      </div>
+                    </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+    <!--End Modal Terms -->
+
+
+{% endblock %}
+
+
