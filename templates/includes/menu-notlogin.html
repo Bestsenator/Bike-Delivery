@@ -43,7 +43,6 @@
                   </span>
                   <span class="app-brand-text menu-text fw-bolder ">Motorella</span>
                 </a>
-
                 <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
                   <i class="bx bx-chevron-left bx-sm align-middle"></i>
                 </a>
@@ -56,8 +55,8 @@
                 <li class="menu-header small text-uppercase" style="font-size: 10px;">
                   <span class="menu-header-text">General</span>
                 </li>
-                <li class="menu-item">
-                  <a href="" class="menu-link ">
+                <li class="menu-item {{ IndexMain }}">
+                  <a href="{% url 'index-main' %}" class="menu-link ">
                     <i class="menu-icon tf-icons bx bx-home-circle"></i>
                     <div data-i18n="Analytics">Home</div>
                   </a>
@@ -66,7 +65,7 @@
                   <span class="menu-header-text" style="font-size: 10px;">Manage Account</span>
                 </li>
                 <li class="menu-item {{ PortalMain }}">
-                  <a href="" class="menu-link ">
+                  <a href="{% url 'portal-main' %}" class="menu-link ">
                     <i class='menu-icon tf-icons bx bx-user'></i>
                     <div data-i18n="Analytics">Portal</div>
                   </a>
