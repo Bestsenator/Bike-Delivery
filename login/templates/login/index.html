@@ -1,10 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}
+    Login
+{% endblock %}
+{% block header_ref %}
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/page-auth.css' %}" />
+{% endblock %}
+{% block content %}
+    <!-- Content -->
+
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <!-- Register -->
+          <div class="card">
+            <div class="card-body">
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                <a href="{% url 'index-main' %}" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo" style="width: 100%">
+                    <img src="{% static 'img/logo.png' %}" alt="" style="width: 50%;margin: 0 25%;" >
+                  </span>
+                </a>
+              </div>
+              <!-- /Logo -->
+              <h4 class="mb-2">Welcome to Motorella! 👋</h4>
+              <p class="mb-4">Please sign-in to your account and start the adventure</p>
+              {% if Status == 401 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Please refresh page and try again. <a href="{% url 'login-main' %}">Refresh</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 402 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Email or Password is Wrong!!
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 403 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Input's is Incomplete. Please refresh and try again.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 404 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Your account is inactive, you can do this by using the activation button. <a href="">Activation</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if SessionExpired == True %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The session for your account has expired or does not exist, please log in to your account again.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              <form id="formAuthentication" class="mb-3" action="{% url 'login-check' %}" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="Email"
+                    placeholder="Enter your email"
+                    autofocus
+                  />
+                </div>
+                <div class="mb-3 form-password-toggle">
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label" for="password">Password</label>
+                    <a href="{% url 'login-forgotPassword' %}">
+                      <small>Forgot Password?</small>
+                    </a>
+                  </div>
+                  <div class="input-group input-group-merge">
+                    <input
+                      type="password"
+                      id="password"
+                      class="form-control"
+                      name="Password"
+                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                      aria-describedby="password"
+                    />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="remember-me" name="RememberMe"/>
+                    <label class="form-check-label" for="remember-me"> Remember Me </label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                </div>
+              </form>
+
+              <p class="text-center">
+                <span>New on our platform?</span>
+                <a href="{% url 'signup-main' %}">
+                  <span>Create an account</span>
+                </a>
+              </p>
+              <p class="text-center">
+                <span>Or back to Home?</span>
+                <a href="{% url 'index-main' %}">
+                  <span>Home</span>
+                </a>
+              </p>
+            </div>
+          </div>
+          <!-- /Register -->
+        </div>
+      </div>
+    </div>
+
+    <!-- / Content -->
+  {% endblock %}
