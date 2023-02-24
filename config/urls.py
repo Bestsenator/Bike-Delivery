@@ -21,4 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('index.urls')),
+    path('portal/', include('portal.urls')),
+    path('login/', include('login.urls')),
+    path('signup/', include('signup.urls')),
 ] + static(settings.STATICFILES_DIRS[0], document_root=settings.STATIC_URL)
