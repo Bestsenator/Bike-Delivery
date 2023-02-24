@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22ac6445-6130-4b46-a67a-0eba3e64b454" name="Changes" comment="add">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/wsgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index/templates/index/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/includes/footer.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/includes/menu-login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/includes/menu-notlogin.html" afterDir="false" />
+    <list default="true" id="22ac6445-6130-4b46-a67a-0eba3e64b454" name="Changes" comment="add login app - first">
+      <change afterPath="$PROJECT_DIR$/funcs/auth.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/funcs/cookies.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/login/templates/login/forgotPassword.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/login/templates/login/resetPassword.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/templates/portal/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/signup/templates/signup/verify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/index/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/index/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/templates/login/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/login/templates/login/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/login/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/login/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signup/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/signup/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signup/templates/signup/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/signup/templates/signup/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signup/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/signup/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signup/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/signup/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/includes/menu-login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/includes/menu-login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/includes/menu-notlogin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/includes/menu-notlogin.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,11 +41,14 @@
       <option value="directory" />
     </option>
   </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -63,12 +72,15 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Projects/Django/progress/Bike Delivery/templates",
+    "last_opened_file_path": "D:/Projects/Django/progress/Bike Delivery/signup/templates/signup",
     "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\Django\progress\Bike Delivery\signup\templates\signup" />
+      <recent name="D:\Projects\Django\progress\Bike Delivery\login\templates\login" />
+      <recent name="D:\Projects\Django\progress\Bike Delivery\funcs" />
       <recent name="D:\Projects\Django\progress\Bike Delivery\templates" />
     </key>
   </component>
@@ -128,7 +140,8 @@
       <option name="presentableId" value="Default" />
       <updated>1677049286181</updated>
       <workItem from="1677049289566" duration="1530000" />
-      <workItem from="1677050855316" duration="4834000" />
+      <workItem from="1677050855316" duration="7436000" />
+      <workItem from="1677251660176" duration="17267000" />
     </task>
     <task id="LOCAL-00001" summary="add">
       <created>1677049568154</created>
@@ -144,7 +157,70 @@
       <option name="project" value="LOCAL" />
       <updated>1677049935700</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add config - first">
+      <created>1677128436407</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1677128436407</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add index app - first">
+      <created>1677128447203</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1677128447203</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add static files - first">
+      <created>1677128458107</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677128458107</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add templates files - first">
+      <created>1677128469615</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1677128469615</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add etc filess - first">
+      <created>1677128487605</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1677128487605</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add login app - first">
+      <created>1677129603456</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1677129603456</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add signup app - first">
+      <created>1677129613012</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1677129613012</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add signup app - first">
+      <created>1677129649716</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1677129649716</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add login app - first">
+      <created>1677129657487</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1677129657487</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +239,13 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add" />
-    <option name="LAST_COMMIT_MESSAGE" value="add" />
+    <MESSAGE value="add config - first" />
+    <MESSAGE value="add index app - first" />
+    <MESSAGE value="add static files - first" />
+    <MESSAGE value="add templates files - first" />
+    <MESSAGE value="add etc files - first" />
+    <MESSAGE value="add signup app - first" />
+    <MESSAGE value="add login app - first" />
+    <option name="LAST_COMMIT_MESSAGE" value="add login app - first" />
   </component>
 </project>
