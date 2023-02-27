@@ -1,7 +1,7 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
 from funcs import auth
-from signup.models import Customer
+from signup.models import Customer, Courier, BikeDeliveryManger
 from funcs.cookies import set_cookie
 
 # Create your views here.
@@ -36,7 +36,9 @@ def check(request):
                 'Status': 403  # input incomplete
             }
             return render(request, 'login/index.html', context)
-    customerInfo = Customer.objects.filter(Email=email,Password=password).first()
+    customerInfo = Customer.objects.filter(Email=email, Password=password).first()
+    courierInfo = Courier.objects.filter(Email=email, Password=password).first()
+    bikeDeInfo = BikeDeliveryManger.objects.filter(Email=email, Password=password).first()
     if customerInfo:
         if customerInfo.isActive is False:
             context = {
@@ -49,6 +51,32 @@ def check(request):
             set_cookie(response, 'Session', '{}'.format(customerInfo.Session))
         else:
             set_cookie(response, 'Session', '{}'.format(customerInfo.Session), 5)  # 5 hour
+        return response
+    elif courierInfo:
+        if courierInfo.isActive is False:
+            context = {
+                'Status': 404,  # account is inactive
+            }
+            return render(request, 'login/index.html', context)
+        redirectUrl = reverse('portal-main')
+        response = HttpResponseRedirect(redirectUrl)
+        if rememberMe:
+            set_cookie(response, 'Session', '{}'.format(courierInfo.Session))
+        else:
+            set_cookie(response, 'Session', '{}'.format(courierInfo.Session), 5)  # 5 hour
+        return response
+    elif bikeDeInfo:
+        if bikeDeInfo.isActive is False:
+            context = {
+                'Status': 404,  # account is inactive
+            }
+            return render(request, 'login/index.html', context)
+        redirectUrl = reverse('portal-main')
+        response = HttpResponseRedirect(redirectUrl)
+        if rememberMe:
+            set_cookie(response, 'Session', '{}'.format(bikeDeInfo.Session))
+        else:
+            set_cookie(response, 'Session', '{}'.format(bikeDeInfo.Session), 5)  # 5 hour
         return response
     else:
         context = {
