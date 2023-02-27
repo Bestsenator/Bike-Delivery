@@ -1,35 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22ac6445-6130-4b46-a67a-0eba3e64b454" name="Changes" comment="add login app - first">
-      <change afterPath="$PROJECT_DIR$/funcs/auth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/funcs/cookies.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/login/templates/login/forgotPassword.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/login/templates/login/resetPassword.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/templates/portal/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/signup/templates/signup/verify.html" afterDir="false" />
+    <list default="true" id="22ac6445-6130-4b46-a67a-0eba3e64b454" name="Changes" comment="add etc files - v2">
+      <change afterPath="$PROJECT_DIR$/funcs/checker.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/templates/portal/bikeDelivery.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/includes/menu-bikeDeliveryManager.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/index/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/funcs/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/funcs/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/index/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/templates/login/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/login/templates/login/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/login/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/login/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/login/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/templates/portal/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/portal/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signup/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/signup/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signup/templates/signup/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/signup/templates/signup/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signup/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/signup/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signup/templates/signup/verify.html" beforeDir="false" afterPath="$PROJECT_DIR$/signup/templates/signup/verify.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signup/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/signup/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/includes/menu-login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/includes/menu-login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/includes/menu-notlogin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/includes/menu-notlogin.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,16 +53,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Projects/Django/progress/Bike Delivery/signup/templates/signup",
-    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/Django/progress/Bike Delivery&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.CommitDialog&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\Django\progress\Bike Delivery\signup\templates\signup" />
@@ -141,7 +128,12 @@
       <updated>1677049286181</updated>
       <workItem from="1677049289566" duration="1530000" />
       <workItem from="1677050855316" duration="7436000" />
-      <workItem from="1677251660176" duration="17267000" />
+      <workItem from="1677251660176" duration="18007000" />
+      <workItem from="1677311168521" duration="4788000" />
+      <workItem from="1677321432433" duration="12428000" />
+      <workItem from="1677409293299" duration="4159000" />
+      <workItem from="1677473910440" duration="5000" />
+      <workItem from="1677473919709" duration="18886000" />
     </task>
     <task id="LOCAL-00001" summary="add">
       <created>1677049568154</created>
@@ -220,7 +212,70 @@
       <option name="project" value="LOCAL" />
       <updated>1677129657487</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="edit signup app - v2">
+      <created>1677270301423</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1677270301423</updated>
+    </task>
+    <task id="LOCAL-00013" summary="edit portal app - v2">
+      <created>1677270310563</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1677270310563</updated>
+    </task>
+    <task id="LOCAL-00014" summary="edit login app - v2">
+      <created>1677270315975</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1677270315975</updated>
+    </task>
+    <task id="LOCAL-00015" summary="edit index app - v2">
+      <created>1677270325143</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1677270325143</updated>
+    </task>
+    <task id="LOCAL-00016" summary="add funcs - first">
+      <created>1677270372136</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1677270372136</updated>
+    </task>
+    <task id="LOCAL-00017" summary="edit config - v2">
+      <created>1677270394548</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1677270394548</updated>
+    </task>
+    <task id="LOCAL-00018" summary="edit menu's - v2">
+      <created>1677270404239</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1677270404239</updated>
+    </task>
+    <task id="LOCAL-00019" summary="edit database - v2">
+      <created>1677270421646</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1677270421646</updated>
+    </task>
+    <task id="LOCAL-00020" summary="add etc files - v2">
+      <created>1677270436708</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1677270436708</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -246,6 +301,26 @@
     <MESSAGE value="add etc files - first" />
     <MESSAGE value="add signup app - first" />
     <MESSAGE value="add login app - first" />
-    <option name="LAST_COMMIT_MESSAGE" value="add login app - first" />
+    <MESSAGE value="edit signup app - v2" />
+    <MESSAGE value="edit portal app - v2" />
+    <MESSAGE value="edit login app - v2" />
+    <MESSAGE value="edit index app - v2" />
+    <MESSAGE value="add funcs - first" />
+    <MESSAGE value="edit config - v2" />
+    <MESSAGE value="edit menu's - v2" />
+    <MESSAGE value="edit database - v2" />
+    <MESSAGE value="add etc files - v2" />
+    <option name="LAST_COMMIT_MESSAGE" value="add etc files - v2" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="django-line">
+          <url>file://$PROJECT_DIR$/portal/templates/portal/bikeDelivery.html</url>
+          <line>385</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
