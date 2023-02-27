@@ -1,0 +1,437 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Bike Delivery
+{% endblock %}
+
+{% block header_ref %}
+    <script>
+        let listDeleted = JSON.parse('{{ ListDeletedBD_json | escapejs }}');
+        function onlyNumberKey(evt) {
+            // Only ASCII character in that range allowed
+            let ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            return !(ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57));
+        }
+        function changeInfoDialog(code){
+            for(item of listDeleted){
+                if(item['fields'].SuNumber === code){
+                    document.getElementById('NameInList').value = item['fields'].Name;
+                    document.getElementById('AddressInList').value = item['fields'].Address;
+                    document.getElementById('PhoneInList').value = item['fields'].Phone;
+                    document.getElementById('CoCodeInList').value = item['fields'].CountryCode;
+                }
+            }
+        }
+        function changeDeleteDialog(code){
+            for(item of listDeleted){
+                if(item['fields'].SuNumber === code){
+                    document.getElementById('BDnameDeleteDialog').innerHTML = item['fields'].Name;
+                    document.getElementById('LinkCompleteDelete').href = '{% url 'portal-coDeleteBikeDelivery' %}' + '?code=' + item['fields'].SuNumber;
+
+                }
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% if Character == 'BikeDeliveryManager' %}
+        {% include 'includes/menu-bikeDeliveryManager.html' %}
+    {% else %}
+        {% include 'includes/menu-login.html' %}
+    {% endif %}
+
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+
+        <!-- Layout container -->
+        <div class="layout-page">
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Portal / Bike Delivery</span></h4>
+              {% if DeletedBD == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                        The desired Bike Delivery was deleted.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 401 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                        You have not registered a Bike Delivery for yourself.<br>
+                  </div>
+              {% endif %}
+              {% if Status == 402 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Please refresh page and try again. <a href="{% url 'portal-bikeDelivery' %}">Refresh</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 403 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Input's is Incomplete. Please refresh and try again. <a href="{% url 'portal-bikeDelivery' %}">Refresh</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 404 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The Bike Delivery code is invalid. <a href="{% url 'portal-bikeDelivery' %}">Refresh</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if SuccessSaveBikeDelivery == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                        The desired motor picker was added. Now you can manage it.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if ChangedInfoBD == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                        The information about the Bike Delivery was updated.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if ChangedStatusBD == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                        The status of the Bike Delivery has changed. From now on,<br>
+                        this Bike Delivery will not be displayed in the list of couriers shown to the customer.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if CompleteDeletedBD == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                        The intended Bike Delivery was completely removed from the system database.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+
+
+              <!--Start Little Information -->
+              {% if Info == False %}
+                  <div class="row mb-3">
+                    <div class="col-12">
+                      <div class="card mb-4">
+                        <h5 class="card-header">Bike Delivery</h5>
+                        <div class="card-body">
+                          <p class="card-text">
+                            You can add a Bike Delivery and manage it.<br>
+                              I hope you will enjoy the facilities to the fullest 😄.
+                          </p>
+                          <p class="demo-inline-spacing">
+                            <button class="btn btn-primary me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+                              Add Bike Delivery
+                            </button>
+                          </p>
+                          <div class="collapse" id="collapseExample" style="">
+                            <div class="d-grid d-sm-flex p-3 border">
+                              <div class="card-body">
+                                 <form method="post" action="{% url 'portal-addBikeDelivery' %}">
+                                   {% csrf_token %}
+                                   <div class="mb-3 col-12 ">
+                                     <label class="form-label" for="basic-default-fullname">Name</label>
+                                     <input type="text" class="form-control" id="basic-default-fullname"
+                                            maxlength="100" placeholder="NoAvaran" name="Name" required>
+                                   </div>
+                                   <div class="mb-3">
+                                     <label class="form-label" for="basic-default-company">Address</label>
+                                     <input type="text" class="form-control" id="basic-default-company"
+                                            maxlength="500" placeholder="Iran - Tehran - Ghasimie" name="Address" required>
+                                   </div>
+                                   <div class="mb-3 col-12 ">
+                                      <label class="form-label" for="phoneNumber">Phone</label>
+                                      <div class="input-group input-group-merge">
+                                          <span class="input-group-text" style="padding: 7px 5px;">+</span>
+                                          <input type="text" id="codeCountry" name="CountryCode" class="form-control col-md-1"
+                                                 placeholder="98" required maxlength="3" style="max-width: 32px;" pattern="[0-9]+" onkeypress="return onlyNumberKey(event)">
+                                          <input type="text" id="phoneNumber" name="Phone" class="form-control" onkeypress="return onlyNumberKey(event)"
+                                                 placeholder="912 3456 789" required maxlength="10" pattern="[0-9]+">
+                                      </div>
+                                   </div>
+                                   <button type="submit" class="btn btn-outline-secondary">Add</button>
+                                 </form>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              {% else %}
+                  <div class="card mb-3">
+                    <div class="table-responsive text-nowrap">
+                  <table class="table table-hover" style="text-align: center">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Number of Courier</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      <tr>
+                        <td>
+                          <strong>{{ Info.Name }}</strong>
+                        </td>
+                        <td>{{ Info.Address }}</td>
+                        <td>
+                            {{ Info.nCourier }}
+                        </td>
+                        <td>
+                            {% if Info.isActive == True %}
+                                <span class="badge bg-label-success">Active</span>
+
+                            {% else %}
+                                <span class="badge bg-label-danger">Inactive</span>
+                            {% endif %}
+                            <button type="button" class="btn btn-icon btn-outline-info" title="Change Status" style="height: 1.4rem;">
+                                <i class='bx bx-transfer-alt'></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-icon btn-outline-danger"
+                                    title="Delete" data-bs-toggle="modal" data-bs-target="#DeleteBikeDelivery">
+                                <i class="bx bx-trash-alt"></i>
+                            </button>
+                            <button type="button" class="btn btn-icon btn-outline-secondary"
+                                    title="Edit Info" data-bs-toggle="modal" data-bs-target="#EditInfoBikeDelivery">
+                                <i class='bx bx-edit-alt'></i>
+                            </button>
+                            <button type="button" class="btn btn-icon btn-outline-primary" title=""><i class='bx bx-bar-chart-square'></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                  </div>
+              {% endif %}
+
+              <div class="card accordion-item active">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button type="button" class="accordion-button text-primary" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="true" aria-controls="accordionTwo">
+                    List of deleted Bike Delivery (up to a month ago)
+                  </button>
+                </h2>
+                <div id="accordionTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
+                  <div class="accordion-body">
+                    {% if ListDeletedBD == False %}
+                        <p class="text-danger">**There are no deleted records for Bike Delivery**</p>
+                    {% else %}
+                        <div class="card mb-3">
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-hover" style="text-align: center">
+                                  <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Address</th>
+                                      <th>Register Time</th>
+                                      <th>Delete Time</th>
+                                      <th>Actions</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody class="table-border-bottom-0">
+                                    {% for item in ListDeletedBD %}
+                                        <tr>
+                                          <td>
+                                            <strong>{{ item.Name }}</strong>
+                                          </td>
+                                          <td>{{ item.Address }}</td>
+                                          <td>
+                                              {{ item.RegisterTime.year }}/{{ item.RegisterTime.month }}/{{ item.RegisterTime.day }} - {{ item.RegisterTime.hour }}:{{ item.DeleteTime.minute }}:{{ item.DeleteTime.second }}
+                                          </td>
+                                          <td>
+                                              {{ item.DeleteTime.year }}/{{ item.DeleteTime.month }}/{{ item.DeleteTime.day }} - {{ item.DeleteTime.hour }}:{{ item.DeleteTime.minute }}:{{ item.DeleteTime.second }}
+                                          </td>
+                                          <td>
+                                              <button type="button" class="btn btn-icon btn-outline-danger"
+                                                      title="Complete Delete" data-bs-toggle="modal" data-bs-target="#CompleteDeleteBikeDelivery"
+                                                      onclick="changeDeleteDialog({{ item.SuNumber }});"   >
+                                                  <i class="bx bx-trash-alt"></i>
+                                              </button>
+                                              <button type="button" class="btn btn-icon btn-outline-secondary"
+                                                      title="Bike Delivery Return" data-bs-toggle="modal" data-bs-target="#PreviewBeforeReturn"
+                                                      onclick="changeInfoDialog({{ item.SuNumber }});">
+                                                  <i class='bx bx-revision'></i>
+                                              </button>
+                                          </td>
+                                        </tr>
+                                    {% endfor %}
+                                  </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- / Content -->
+
+            <!-- Modal Edit Info Bike Delivery -->
+            <div class="modal fade " id="EditInfoBikeDelivery" tabindex="-1" aria-modal="true" role="dialog">
+              <form class="modal-dialog modal-dialog-centered" method="post" action="{% url 'portal-changeInfoBikeDelivery' %}" >
+                {% csrf_token %}
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalCenterTitle">Bike Delivery Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col mb-3">
+                        <label for="nameWithTitle" class="form-label">Name</label>
+                        <input type="text" id="nameWithTitle" class="form-control" name="Name" required value="{{ Info.Name }}">
+                      </div>
+                    </div>
+                    <div class="row g-2">
+                      <div class="col mb-0">
+                        <label for="emailWithTitle" class="form-label">Address</label>
+                        <input type="text" id="emailWithTitle" class="form-control" name="Address" required value="{{ Info.Address }}">
+                      </div>
+                    </div>
+                    <div class="mb-3 col-12 ">
+                       <label class="form-label" for="phoneNumber">Phone</label>
+                       <div class="input-group input-group-merge">
+                           <span class="input-group-text" style="padding: 7px 5px;">+</span>
+                           <input type="text" id="codeCountry" name="CountryCode" class="form-control col-md-1" value="{{ Info.CountryCode }}"
+                                  placeholder="98" required maxlength="3" style="max-width: 32px;" pattern="[0-9]+" onkeypress="return onlyNumberKey(event)">
+                           <input type="text" id="phoneNumber" name="Phone" class="form-control" onkeypress="return onlyNumberKey(event)"
+                                  placeholder="912 3456 789" required maxlength="10" pattern="[0-9]+" value="{{ Info.Phone }}">
+                       </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                      Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+
+            <!-- Modal Preview Before Return Bike Delivery -->
+            <div class="modal fade " id="PreviewBeforeReturn" tabindex="-1" aria-modal="true" role="dialog">
+              <form class="modal-dialog modal-dialog-centered" method="post" action="{% url 'portal-changeInfoBikeDelivery' %}" >
+                {% csrf_token %}
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalCenterTitle">Bike Delivery Information Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p class="text-warning">
+                        Keep in mind that if you have a Bike Delivery currently active, that Bike Delivery will be deleted <br>
+                        and this Bike Delivery with its own drivers will be considered active.
+                    </p>
+                    <div class="row">
+                      <div class="col mb-3">
+                        <label for="NameInList" class="form-label">Name</label>
+                        <input type="text" id="NameInList" class="form-control" name="Name" disabled>
+                      </div>
+                    </div>
+                    <div class="row g-2">
+                      <div class="col mb-0">
+                        <label for="AddressInList" class="form-label">Address</label>
+                        <input type="text" id="AddressInList" class="form-control" name="Address" disabled>
+                      </div>
+                    </div>
+                    <div class="mb-3 col-12 ">
+                       <label class="form-label" for="PhoneInList">Phone</label>
+                       <div class="input-group input-group-merge">
+                           <span class="input-group-text" style="padding: 7px 5px; background-color: #eceef1" >+</span>
+                           <input type="text" id="CoCodeInList" name="CountryCode" class="form-control col-md-1"
+                                  style="max-width: 32px;" disabled>
+                           <input type="text" id="PhoneInList" name="Phone" class="form-control" disabled>
+                       </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                      Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Set as Active</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+
+            <!-- Modal Complete Delete Bike Delivery -->
+            <div class="modal fade " id="CompleteDeleteBikeDelivery" tabindex="-1" aria-modal="true" role="dialog">
+              <div class="modal-dialog modal-dialog-centered" >
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h3 class="modal-title" id="modalCenterTitle">Delete permanently and completely?</h3>
+                    <button type="button" style="margin-top: -2.25rem;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <h5 class="text-danger">Are you sure about removing the <strong id="BDnameDeleteDialog"></strong> Bike Delivery??<br>
+                    </h5>
+                    <p class="text-warning">(This will delete all the information related to this Bike Delivery from the database)</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                      No
+                    </button>
+                    {% if ListDeletedDB != False %}
+                       <a href="" id="LinkCompleteDelete" class="btn btn-primary text-white">Yes</a>
+                    {% else %}
+                       <a href="" id="LinkCompleteDelete" class="btn btn-primary text-white disabled">Yes</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal Delete Bike Delivery -->
+            <div class="modal fade " id="DeleteBikeDelivery" tabindex="-1" aria-modal="true" role="dialog">
+              <div class="modal-dialog modal-dialog-centered" >
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h3 class="modal-title" id="modalCenterTitle">Delete Bike Delivery</h3>
+                    <button type="button" style="margin-top: -2.25rem;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <h5 class="text-danger">Are you sure about removing the <strong>{{ Info.Name }}</strong> Bike Delivery??<br>
+                    </h5>
+                    <p class="text-warning">
+                        ( If deleted, the information of this Bike Delivery will remain in the database for up to one month )
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                      No
+                    </button>
+                    {% if Info != False %}
+                       <a href="{% url 'portal-deleteBikeDelivery' code=Info.SuNumber %}" class="btn btn-primary text-white">Yes</a>
+                    {% else %}
+                       <a href="" class="btn btn-primary text-white disabled">Yes</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% include 'includes/footer.html' %}
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+{% endblock %}

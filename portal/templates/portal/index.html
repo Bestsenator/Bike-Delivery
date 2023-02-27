@@ -6,7 +6,12 @@
 {% endblock %}
 
 {% block content %}
-    {% include 'includes/menu-login.html' %}
+    {% if Character == 'BikeDeliveryManager' %}
+        {% include 'includes/menu-bikeDeliveryManager.html' %}
+    {% else %}
+        {% include 'includes/menu-login.html' %}
+    {% endif %}
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -20,6 +25,14 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Portal / Dashboard</span></h4>
+              {% if Status == 401 %}
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                        You have not registered a Bike Delivery for yourself.<br>
+                        Please proceed to register a Bike Delivery <a href="{% url 'portal-bikeDelivery' %}">Add Bike Delivery</a>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              <div class="alert alert-primary" role="alert">You have entered the website as character <strong>{{ Character }}</strong></div>
               <!--Start Little Information -->
 
 
