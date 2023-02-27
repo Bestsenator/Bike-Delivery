@@ -1,21 +1,36 @@
-from signup.models import Customer
+from signup.models import Customer, Courier, BikeDeliveryManger
 import re
 
 
 def checkSession(request):
     sesBrowser = request.COOKIES.get('Session')
     customerInfo = Customer.objects.filter(Session=sesBrowser).first()
+    info = None
+    context = {}
     if customerInfo:
-        if customerInfo.isActive is True:
-            context = {
-                'Status': 200,  # Customer
-                'Info': customerInfo
-            }
+        info = customerInfo
+        context = {
+            'Character': 'Customer'
+        }
+    courierInfo = Courier.objects.filter(Session=sesBrowser).first()
+    if courierInfo:
+        info = courierInfo
+        context = {
+            'Character': 'Courier'
+        }
+    bikeDeInfo = BikeDeliveryManger.objects.filter(Session=sesBrowser).first()
+    if bikeDeInfo:
+        info = bikeDeInfo
+        context = {
+            'Character': 'BikeDeliveryManager'
+        }
+    if info is not None:
+        if info.isActive is True:
+            context['Status'] = 200  # valid
+            context['Info'] = info
         else:
-            context = {
-                'Status': 201,  # Customer but inactive account
-                'Info': customerInfo
-            }
+            context['Status'] = 201,  # valid but inactive account
+            context['Info'] = info
     else:
         context = {
             'Status': 400  # not found session or member with this session
