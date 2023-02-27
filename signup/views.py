@@ -3,11 +3,10 @@ from datetime import timezone
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
 from funcs.cookies import set_cookie
-from .models import Customer, VerifyCode
+from .models import Customer, VerifyCode, Courier, BikeDeliveryManger
 from funcs import auth
 import re
 from secrets import token_urlsafe
-
 
 # Create your views here.
 
@@ -41,7 +40,8 @@ def check(request):
     password = request.POST.get('Password')
     retypePassword = request.POST.get('RetypePassword')
     terms = request.POST.get('Terms')
-    listInput = [name, family, countryCode, phone,
+    character = request.POST.get('Character')
+    listInput = [name, family, countryCode, phone, character,
                  email, password, retypePassword, terms]
     for i in listInput:
         print(i)
@@ -56,7 +56,8 @@ def check(request):
         }
         return render(request, 'signup/index.html', context)
     memberInfo = Customer.objects.filter(Email=email).first()
-    if memberInfo:
+    courierInfo = Courier.objects.filter(Email=email).first()
+    if memberInfo or courierInfo:
         context = {
             'Status': 406,  # email exist
         }
@@ -94,8 +95,23 @@ def check(request):
         }
         return render(request, 'signup/index.html', context)
     sesID = token_urlsafe(100)
-    Customer.objects.create(Name=name, Family=family, Email=email,
-                            Phone=phone, Password=password, Session=sesID, CountryCode=countryCode)
+    if character == 'Customer':
+        Customer.objects.create(Name=name, Family=family, Email=email,
+                                Phone=phone, Password=password, Session=sesID,
+                                CountryCode=countryCode)
+    elif character == 'Courier':
+        Courier.objects.create(Name=name, Family=family, Email=email,
+                               Phone=phone, Password=password, Session=sesID,
+                               CountryCode=countryCode)
+    elif character == 'BikeDeliveryManager':
+        BikeDeliveryManger.objects.create(Name=name, Family=family, Email=email,
+                                          Phone=phone, Password=password, Session=sesID,
+                                          CountryCode=countryCode)
+    else:
+        context = {
+            'Status': 403,  # input format is invalid
+        }
+        return render(request, 'signup/index.html', context)
     VerifyCode.objects.create(Email=email, Session=sesID)
     redirectUrl = reverse('signup-verify')
     response = HttpResponseRedirect(redirectUrl)
@@ -111,10 +127,9 @@ def verify(request):
     elif resAuth.get('Status') == 200:
         redirectUrl = reverse('portal-main')
         return HttpResponseRedirect(redirectUrl)
-    customerInfo = Customer.objects.filter(Session=request.COOKIES.get('Session')).first()
     context = {
-        'Email': customerInfo.Email,
-        'SuNumber': customerInfo.SuNumber,
+        'Email': resAuth.get('Info').Email,
+        'SuNumber': resAuth.get('Info').SuNumber,
     }
     if request.COOKIES.get('Notif202') == '1':
         context['SendCodeSuccess'] = True
@@ -174,10 +189,3 @@ def verifyCheck(request):
     else:
         redirectUrl = reverse('signup-verify')
         return HttpResponseRedirect(redirectUrl)
-
-
-
-
-
-
-
