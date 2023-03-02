@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22ac6445-6130-4b46-a67a-0eba3e64b454" name="Changes" comment="add etc files - v2">
-      <change afterPath="$PROJECT_DIR$/funcs/checker.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/templates/portal/bikeDelivery.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/includes/menu-bikeDeliveryManager.html" afterDir="false" />
+    <list default="true" id="22ac6445-6130-4b46-a67a-0eba3e64b454" name="Changes" comment="edit etc files">
+      <change afterPath="$PROJECT_DIR$/portal/templates/portal/profile.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/templates/portal/requests.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/t.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/funcs/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/funcs/auth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/index/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/templates/login/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/login/templates/login/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/login/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/login/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/templates/portal/bikeDelivery.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/portal/bikeDelivery.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/templates/portal/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/portal/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signup/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/signup/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signup/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/signup/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signup/templates/signup/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/signup/templates/signup/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signup/templates/signup/verify.html" beforeDir="false" afterPath="$PROJECT_DIR$/signup/templates/signup/verify.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signup/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/signup/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/includes/menu-bikeDeliveryManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/includes/menu-bikeDeliveryManager.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,8 +35,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -60,7 +61,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/Projects/Django/progress/Bike Delivery&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.CommitDialog&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -133,7 +134,10 @@
       <workItem from="1677321432433" duration="12428000" />
       <workItem from="1677409293299" duration="4159000" />
       <workItem from="1677473910440" duration="5000" />
-      <workItem from="1677473919709" duration="18886000" />
+      <workItem from="1677473919709" duration="19287000" />
+      <workItem from="1677562349207" duration="10046000" />
+      <workItem from="1677694627608" duration="27246000" />
+      <workItem from="1677783219642" duration="6717000" />
     </task>
     <task id="LOCAL-00001" summary="add">
       <created>1677049568154</created>
@@ -275,7 +279,70 @@
       <option name="project" value="LOCAL" />
       <updated>1677270436708</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="add login app - v3">
+      <created>1677533157408</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1677533157409</updated>
+    </task>
+    <task id="LOCAL-00022" summary="add index app - v3">
+      <created>1677533176542</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1677533176542</updated>
+    </task>
+    <task id="LOCAL-00023" summary="add portal app - v3">
+      <created>1677533189829</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1677533189829</updated>
+    </task>
+    <task id="LOCAL-00024" summary="add signup app - v3">
+      <created>1677533202437</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1677533202437</updated>
+    </task>
+    <task id="LOCAL-00025" summary="add menu-bikeDeliveryManager file - first">
+      <created>1677533229012</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1677533229012</updated>
+    </task>
+    <task id="LOCAL-00026" summary="add checker files - first">
+      <created>1677533260693</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1677533260693</updated>
+    </task>
+    <task id="LOCAL-00027" summary="edit auth file - v1">
+      <created>1677533278146</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1677533278146</updated>
+    </task>
+    <task id="LOCAL-00028" summary="edit database - v3">
+      <created>1677533294032</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1677533294032</updated>
+    </task>
+    <task id="LOCAL-00029" summary="edit etc files">
+      <created>1677533313089</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1677533313089</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,7 +360,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add" />
     <MESSAGE value="add config - first" />
     <MESSAGE value="add index app - first" />
     <MESSAGE value="add static files - first" />
@@ -310,15 +376,39 @@
     <MESSAGE value="edit menu's - v2" />
     <MESSAGE value="edit database - v2" />
     <MESSAGE value="add etc files - v2" />
-    <option name="LAST_COMMIT_MESSAGE" value="add etc files - v2" />
+    <MESSAGE value="add login app - v3" />
+    <MESSAGE value="add index app - v3" />
+    <MESSAGE value="add portal app - v3" />
+    <MESSAGE value="add signup app - v3" />
+    <MESSAGE value="add menu-bikeDeliveryManager file - first" />
+    <MESSAGE value="add checker files - first" />
+    <MESSAGE value="edit auth file - v1" />
+    <MESSAGE value="edit database - v3" />
+    <MESSAGE value="edit etc files" />
+    <option name="LAST_COMMIT_MESSAGE" value="edit etc files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="django-line">
-          <url>file://$PROJECT_DIR$/portal/templates/portal/bikeDelivery.html</url>
-          <line>385</line>
-          <option name="timeStamp" value="1" />
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/portal/models.py</url>
+          <line>10</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/portal/models.py</url>
+          <line>11</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/portal/models.py</url>
+          <line>12</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/portal/models.py</url>
+          <line>13</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
