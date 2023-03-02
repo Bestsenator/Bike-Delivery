@@ -10,9 +10,9 @@ from funcs.cookies import set_cookie
 def index(request):
     context = {}
     if request.COOKIES.get('Notif401'):  # from portal --> session not found or expired
-        context = {
-            'SessionExpired': True,
-        }
+        context['SessionExpired'] = True
+    if request.COOKIES.get('Notif210'):  # from portal-deleteAcc --> deleted
+        context['DeletedAcc'] = True
     return render(request, 'login/index.html', context)
 
 

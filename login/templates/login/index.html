@@ -57,6 +57,12 @@
                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
               {% endif %}
+              {% if DeletedAcc == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                      Your account has been successfully deleted.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
               <form id="formAuthentication" class="mb-3" action="{% url 'login-check' %}" method="POST" autocomplete="off">
                 {% csrf_token %}
                 <div class="mb-3">
