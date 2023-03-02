@@ -20,6 +20,8 @@
                     document.getElementById('AddressInList').value = item['fields'].Address;
                     document.getElementById('PhoneInList').value = item['fields'].Phone;
                     document.getElementById('CoCodeInList').value = item['fields'].CountryCode;
+                    document.getElementById('CodeInList').value = item['fields'].SuNumber;
+                    document.getElementById('LinkChBikeDeliveryActive').href = '{% url 'portal-chBikeDeliveryActive' %}' + '?code=' + item['fields'].SuNumber;
                 }
             }
         }
@@ -32,6 +34,7 @@
                 }
             }
         }
+
     </script>
 {% endblock %}
 
@@ -109,6 +112,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
               {% endif %}
+              {% if ChangedBikeDeliveryActive == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                        Active Bike Delivery changed.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
 
 
               <!--Start Little Information -->
@@ -168,6 +177,7 @@
                   <table class="table table-hover" style="text-align: center">
                     <thead>
                       <tr>
+                        <th>Code</th>
                         <th>Name</th>
                         <th>Address</th>
                         <th>Number of Courier</th>
@@ -177,6 +187,9 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
                       <tr>
+                        <td>
+                            {{ Info.SuNumber }}
+                        </td>
                         <td>
                           <strong>{{ Info.Name }}</strong>
                         </td>
@@ -191,9 +204,11 @@
                             {% else %}
                                 <span class="badge bg-label-danger">Inactive</span>
                             {% endif %}
-                            <button type="button" class="btn btn-icon btn-outline-info" title="Change Status" style="height: 1.4rem;">
-                                <i class='bx bx-transfer-alt'></i>
-                            </button>
+                            <a href="{% url 'portal-chStatusBikeDelivery' code=Info.SuNumber %}">
+                                <button type="button" class="btn btn-icon btn-outline-info" title="Change Status" style="height: 1.4rem;">
+                                    <i class='bx bx-transfer-alt'></i>
+                                </button>
+                            </a>
                         </td>
                         <td>
                             <button type="button" class="btn btn-icon btn-outline-danger"
@@ -204,7 +219,9 @@
                                     title="Edit Info" data-bs-toggle="modal" data-bs-target="#EditInfoBikeDelivery">
                                 <i class='bx bx-edit-alt'></i>
                             </button>
-                            <button type="button" class="btn btn-icon btn-outline-primary" title=""><i class='bx bx-bar-chart-square'></i></button>
+                            <button type="button" class="btn btn-icon btn-outline-primary" title="Manage">
+                                <i class='bx bx-bar-chart-square'></i>
+                            </button>
                         </td>
                       </tr>
                     </tbody>
@@ -229,6 +246,7 @@
                                 <table class="table table-hover" style="text-align: center">
                                   <thead>
                                     <tr>
+                                      <th>Code</th>
                                       <th>Name</th>
                                       <th>Address</th>
                                       <th>Register Time</th>
@@ -239,6 +257,9 @@
                                   <tbody class="table-border-bottom-0">
                                     {% for item in ListDeletedBD %}
                                         <tr>
+                                          <td>
+                                              {{ item.SuNumber }}
+                                          </td>
                                           <td>
                                             <strong>{{ item.Name }}</strong>
                                           </td>
@@ -318,11 +339,9 @@
               </form>
             </div>
 
-
             <!-- Modal Preview Before Return Bike Delivery -->
             <div class="modal fade " id="PreviewBeforeReturn" tabindex="-1" aria-modal="true" role="dialog">
-              <form class="modal-dialog modal-dialog-centered" method="post" action="{% url 'portal-changeInfoBikeDelivery' %}" >
-                {% csrf_token %}
+              <div class="modal-dialog modal-dialog-centered" >
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="modalCenterTitle">Bike Delivery Information Preview</h5>
@@ -333,13 +352,17 @@
                         Keep in mind that if you have a Bike Delivery currently active, that Bike Delivery will be deleted <br>
                         and this Bike Delivery with its own drivers will be considered active.
                     </p>
-                    <div class="row">
-                      <div class="col mb-3">
+                    <div class="row g-2">
+                      <div class="col-xl-2">
+                        <label for="CodeInList" class="form-label">Code</label>
+                        <input type="text" id="CodeInList" class="form-control" name="Code" disabled>
+                      </div>
+                      <div class="col">
                         <label for="NameInList" class="form-label">Name</label>
                         <input type="text" id="NameInList" class="form-control" name="Name" disabled>
                       </div>
                     </div>
-                    <div class="row g-2">
+                    <div class="row ">
                       <div class="col mb-0">
                         <label for="AddressInList" class="form-label">Address</label>
                         <input type="text" id="AddressInList" class="form-control" name="Address" disabled>
@@ -359,10 +382,12 @@
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                       Close
                     </button>
-                    <button type="submit" class="btn btn-primary">Set as Active</button>
+                      <a href="" id="LinkChBikeDeliveryActive">
+                          <button type="submit" class="btn btn-primary">Set as Active</button>
+                      </a>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
 
 

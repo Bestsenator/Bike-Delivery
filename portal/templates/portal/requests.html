@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Requests
+{% endblock %}
+
+{% block header_ref %}
+    <script>
+        function changeInfo(code){
+            for(item of courierInfo){
+                if(item['fields'].SuNumber === code){
+                    document.getElementById('CodeInList').value = item['fields'].SuNumber;
+                    document.getElementById('NameInList').value = item['fields'].Name;
+                    document.getElementById('FamilyInList').value = item['fields'].Family;
+                    document.getElementById('CoCodeInList').value = item['fields'].CountryCode;
+                    document.getElementById('PhoneInList').value = item['fields'].Phone;
+                    document.getElementById('EmailInList').value = item['fields'].Email;
+                    for(b of reqInfo){
+                        if(b['fields'].CourierCode === item['fields'].SuNumber){
+                            document.getElementById('LinkAddToList').href =
+                                '{% url 'portal-acceptRequestCourier' %}' + '?code=' + b['fields'].Code;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% if Character == 'BikeDeliveryManager' %}
+        {% include 'includes/menu-bikeDeliveryManager.html' %}
+    {% else %}
+        {% include 'includes/menu-login.html' %}
+    {% endif %}
+
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+
+        <!-- Layout container -->
+        <div class="layout-page">
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Portal / Requests</span></h4>
+              {% if Status == 402 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Please refresh page and try again. <a href="{% url 'portal-requests' %}">Refresh</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 403 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Input's is Incomplete. Please refresh and try again. <a href="{% url 'portal-requests' %}">Refresh</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 404 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The Request code is invalid. <a href="{% url 'portal-requests' %}">Refresh</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if AcceptedRequestCourier == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                        The Courier request was accepted.<br>Now you can use this Courier in your orders.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if RejectedRequestCourier == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                        Courier request rejected.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 401 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      You do not have a courier.<br>
+                      Please choose a Bike Delivery from the deleted Bike Deliveries or add a Bike Delivery
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% else %}
+                <div class="card mb-3">
+                 <div class="table-responsive">
+                   {% if ListRequest == False %}
+                      <h4 class="m-2 text-danger">** No request has been sent for {{ BDName }} Bike Delivery.</h4>
+                   {% else %}
+                       <script>
+                         let courierInfo = JSON.parse('{{ CourierInfo_json | escapejs }}');
+                         let reqInfo = JSON.parse('{{ reqInfo_json | escapejs }}');
+                       </script>
+                       <table class="table table-hover" style="text-align: center">
+                     <thead>
+                      <tr>
+                        <th>Code</th>
+                        <th>From</th>
+                        <th>Register Time</th>
+                        <th>Action Time</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                     <tbody class="table-border-bottom-0">
+                     <!-- First Show Requests -->
+                     {% for item in ListRequest %}
+                         {% if item.isChecked == False %}
+                             <tr>
+                               <td>
+                                 {{ item.Code }}
+                               </td>
+                               <td>
+                                 {% for b in CourierInfo %}
+                                     {% if b.SuNumber == item.CourierCode %}
+                                         <strong>{{ b.Name }}</strong>
+                                     {% endif %}
+                                 {% endfor %}
+                               </td>
+                               <td>
+                                   {{ item.RegisterTime.year }}/{{ item.RegisterTime.month }}/{{ item.RegisterTime.day }} -
+                                   {{ item.RegisterTime.hour }}:{{ item.RegisterTime.minute }}:{{ item.RegisterTime.second }}
+                               </td>
+                               <td>
+                                   {% if item.ActionTime.year == 1300 %}
+                                       No Action
+                                   {% else %}
+                                       {{ item.ActionTime.year }}/{{ item.ActionTime.month }}/{{ item.ActionTime.day }} -
+                                       {{ item.ActionTime.hour }}:{{ item.ActionTime.minute }}:{{ item.ActionTime.second }}
+                                   {% endif %}
+                               </td>
+                               <td>
+                                   {% for b in CourierInfo %}
+                                       {% if b.SuNumber == item.CourierCode %}
+                                           <button type="button" class="btn btn-icon btn-outline-success"
+                                                   title="Accept" data-bs-toggle="modal" data-bs-target="#ViewInfoCourier"
+                                                   onclick="changeInfo({{ b.SuNumber }});">
+                                               <i class='bx bx-like'></i>
+                                           </button>
+                                           <button type="button" class="btn btn-icon btn-outline-danger"
+                                                   title="Reject" data-bs-toggle="modal" data-bs-target="#"
+                                                   onclick="window.location.href = '{% url 'portal-rejectRequestCourier' code=item.Code %}'">
+                                                <i class='bx bx-dislike' ></i>
+                                           </button>
+                                       {% endif %}
+                                   {% endfor %}
+                               </td>
+                             </tr>
+                         {% endif %}
+                     {% endfor %}
+                     <!-- After that requests are rejected or accepted -->
+                     {% for item in ListRequest %}
+                        {% if item.isChecked == True %}
+                            <tr>
+                              <td>
+                                {{ item.Code }}
+                              </td>
+                              <td>
+                                {% for b in CourierInfo %}
+                                    {% if b.SuNumber == item.CourierCode %}
+                                        <strong>{{ b.Name }}</strong>
+                                    {% endif %}
+                                {% endfor %}
+                              </td>
+                              <td>
+                                  {{ item.RegisterTime.year }}/{{ item.RegisterTime.month }}/{{ item.RegisterTime.day }} -
+                                  {{ item.RegisterTime.hour }}:{{ item.RegisterTime.minute }}:{{ item.RegisterTime.second }}
+                              </td>
+                              <td>
+                                  {% if item.ActionTime.year == 1300 %}
+                                      No Action
+                                  {% else %}
+                                      {{ item.ActionTime.year }}/{{ item.ActionTime.month }}/{{ item.ActionTime.day }} -
+                                      {{ item.ActionTime.hour }}:{{ item.ActionTime.minute }}:{{ item.ActionTime.second }}
+                                  {% endif %}
+                              </td>
+                               {% if item.Status == True %}
+                                 <td>
+                                     <i class='bx bx-user-check text-success' style="font-size: 30px;"
+                                         title="The request has been rejected">
+                                     </i>
+                                 </td>
+                               {% else %}
+                                 <td>
+                                     <i class='bx bx-user-x text-danger' style="font-size: 30px;"
+                                         title="The request has been accepted">
+                                     </i>
+                                 </td>
+                               {% endif %}
+                            </tr>
+                        {% endif %}
+                     {% endfor %}
+
+                    </tbody>
+                   </table>
+                   {% endif %}
+
+                 </div>
+              </div>
+              {% endif %}
+
+
+              <!-- Modal View Info Courier -->
+              <div class="modal fade " id="ViewInfoCourier" tabindex="-1" aria-modal="true" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" >
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modalCenterTitle">Courier Information</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <p class="text-warning">Make sure this courier is the one you want to add to your courier list.</p>
+                      <div class="row g-2">
+                        <div class="col-xl-2 ">
+                          <label for="CodeInList" class="form-label">Code</label>
+                          <input type="text" id="CodeInList" class="form-control" disabled>
+                        </div>
+                        <div class="col-xl-5 ">
+                          <label for="NameInList" class="form-label">Name</label>
+                          <input type="text" id="NameInList" class="form-control" disabled>
+                        </div>
+                        <div class="col-xl-5 ">
+                          <label for="FamilyInList" class="form-label">Family</label>
+                          <input type="text" id="FamilyInList" class="form-control" disabled>
+                        </div>
+                      </div>
+                      <div class="row g-2">
+                        <div class="col mb-0">
+                          <label for="EmailInList" class="form-label">Email</label>
+                          <input type="text" id="EmailInList" class="form-control" disabled>
+                        </div>
+                      </div>
+                      <div class="mb-3 col-12 ">
+                         <label class="form-label" for="PhoneInList">Phone</label>
+                         <div class="input-group input-group-merge">
+                             <span class="input-group-text" style="padding: 7px 5px;background-color: #eceef1;">+</span>
+                             <input type="text" id="CoCodeInList" class="form-control col-md-1"
+                                    style="max-width: 32px;" disabled>
+                             <input type="text" id="PhoneInList" name="Phone" class="form-control" disabled>
+                         </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                      </button>
+                      <a href="" class="btn btn-primary text-white" id="LinkAddToList">It matches</a>
+                    </div>
+                  </div>
+              </div>
+              </div>
+
+            </div>
+            <!-- / Content -->
+
+            {% include 'includes/footer.html' %}
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+{% endblock %}

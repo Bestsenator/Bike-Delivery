@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block header_ref %}
+    <script>
+        let key1 = 0;
+        let key2 = 0;
+        let key3 = 0;
+        let key4 = 0;
+        function verifyPassword(){
+            let text = document.getElementById('newPassword').value;
+            if(/[0-9]/.test(text) === false){
+                key1 = 0;
+                document.getElementById('resAuth-containNumber').innerHTML = '* The password does not contain numbers.';
+            }
+            else{
+                key1 = 1;
+                document.getElementById('resAuth-containNumber').innerHTML = '';
+            }
+            if(text.length < 8 || text.length > 32){
+                key2 = 0;
+                document.getElementById('resAuth-length').innerHTML = '* The password size is not correct.';
+            }
+            else{
+                key2 = 1;
+                document.getElementById('resAuth-length').innerHTML = '';
+            }
+            if(/[A-Z]/.test(text) === true && /[a-z]/.test(text) === true){
+                key3 = 1;
+                document.getElementById('resAuth-upperLower').innerHTML = '';
+            }
+            else{
+                key3 = 0;
+                document.getElementById('resAuth-upperLower').innerHTML = '* Upper and lower case letters are not used.';
+            }
+            let format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+            if(format.test(text) === false){
+                key4 = 0;
+                document.getElementById('resAuth-special').innerHTML = '* No special characters are used in the password.';
+            }
+            else{
+                key4 = 1;
+                document.getElementById('resAuth-special').innerHTML = '';
+            }
+        }
+        function verifyRetypePassword(){
+            let password = document.getElementById('newPassword').value;
+            let retypePassword = document.getElementById('newRetypePassword').value;
+            if(password.length !== 0){
+                if(password !== retypePassword){
+                document.getElementById('resAuth-retypePassword').innerHTML = '* Password and RetypePassword do not match.';
+                document.getElementById('resAuth-retypePassword').style.color = 'red';
+                document.getElementById('ChangeBtn').setAttribute('disabled','');
+                }
+                else{
+                    document.getElementById('resAuth-retypePassword').innerHTML = 'Password and RetypePassword match';
+                    document.getElementById('resAuth-retypePassword').style.color = 'green';
+                    if(key1 === 1 && key2 === 1 && key3 === 1 && key4 === 1) {
+                        document.getElementById('ChangeBtn').removeAttribute('disabled');
+                    }
+                }
+            }
+        }
+        window.onload = function() {
+          document.getElementById('ChangeBtn').setAttribute('disabled', '');
+        };
+    </script>
+    <style>
+        .resAuth {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% if Character == 'BikeDeliveryManager' %}
+        {% include 'includes/menu-bikeDeliveryManager.html' %}
+    {% else %}
+        {% include 'includes/menu-login.html' %}
+    {% endif %}
+
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+
+        <!-- Layout container -->
+        <div class="layout-page">
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Portal / Profile</span></h4>
+              {% if Status == 402 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Please refresh page and try again. <a href="{% url 'portal-profile' %}">Refresh</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 403 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Input's is Incomplete. Please refresh and try again. <a href="{% url 'portal-profile' %}">Refresh</a>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 404 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The size of the selected photo is more than 500 KB.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 405 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The file format is not supported.<br>
+                      Must be JPG or PNG.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 406 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The New Password and the Retype New Password do not match, please try again.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 407 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The current password entered is incorrect
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 408 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      The phone or country code entered is wrong, please check the values and try again.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if Status == 409 %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      Password format is invalid.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if SuccessChangeInfo == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                        Your user information has been changed.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              {% if SuccessChangePassword == True %}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                        Your password has been changed.<br>
+                        You are currently in your account, but you will need to log in with your password after you log out or the session expires.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card mb-4">
+                    <h3 class="card-header">Profile Details</h3>
+                    <!-- Account -->
+                      <div class="card-body">
+                      <form id="formAccountSettings" method="post" action="{% url 'portal-changeInfoProfile' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-body">
+                          <div class="d-flex align-items-start align-items-sm-center gap-4">
+                            <img src="{% static Info.ImagePath %}" alt="user-avatar" class="d-block rounded" height="100" width="90" id="uploadedAvatar">
+                            <div class="button-wrapper">
+                              <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                <span class="d-none d-sm-block">Upload new photo</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                <input type="file" id="upload" class="account-file-input" hidden="" name="Photo" accept="image/png, image/jpeg">
+                              </label>
+                              <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                <i class="bx bx-reset d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Reset</span>
+                              </button>
+                              <p class="text-muted mb-0">Allowed JPG or PNG. Max size of 500K</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="mb-3 col-md-6">
+                            <label for="Name" class="form-label">Name</label>
+                            <input class="form-control" type="text" id="Name" name="Name"
+                                   autofocus="" placeholder="Seyed Mohammad" value="{{ Info.Name }}">
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="Family" class="form-label">Family</label>
+                            <input class="form-control" type="text" name="Family"
+                                   id="Family" placeholder="Musavi" value="{{ Info.Family }}">
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="Email" class="form-label">Email</label>
+                            <input class="form-control" type="text" id="Email"
+                                   name="Email" placeholder="test@example.com" value="{{ Info.Email }}" disabled>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                              <label class="form-label" for="Phone">Phone</label>
+                              <div class="input-group input-group-merge">
+                                  <span class="input-group-text" style="padding: 7px 5px;">+</span>
+                                  <input type="text" id="CountryCode" name="CountryCode" class="form-control col-md-1"
+                                         placeholder="98" required maxlength="3" style="max-width: 32px;"
+                                         pattern="[0-9]+" onkeypress="return onlyNumberKey(event)"
+                                         value="{{ Info.CountryCode }}">
+                                  <input type="text" id="Phone" name="Phone" class="form-control"
+                                         onkeypress="return onlyNumberKey(event)" value="{{ Info.Phone }}"
+                                         placeholder="912 3456 789" required maxlength="10" pattern="[0-9]+">
+                              </div>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="Language" class="form-label">Language</label>
+                            <select id="Language" class="select2 form-select" name="Language">
+                              {% if Info.Language == 'EN' %}
+                                  <option value="default">Select Language</option>
+                                  <option selected value="EN">English</option>
+                                  <option value="FA">Persian</option>
+                              {% elif Info.Language == 'FA' %}
+                                  <option value="default">Select Language</option>
+                                  <option value="EN">English</option>
+                                  <option selected value="FA">Persian</option>
+                              {% else %}
+                                  <option selected value="default">Select Language</option>
+                                  <option value="EN">English</option>
+                                  <option value="FA">Persian</option>
+                              {% endif %}
+
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mt-2">
+                          <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                          <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                        </div>
+                      </form>
+                    </div>
+                    <!-- /Account -->
+                  </div>
+                  <div class="card mb-4">
+                    <h5 class="card-header">Change Password</h5>
+                    <div class="card-body">
+                      <form action="{% url 'portal-changePassword' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-check mb-3">
+                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <input type="text" class="form-control" id="currentPassword" name="CurrentPassword"
+                                   placeholder="Example@123" required>
+                        </div>
+                        <div class="mb-3 form-password-toggle form-check">
+                          <div class="d-flex justify-content-between">
+                            <label class="form-label" for="newPassword">New Password</label>
+                          </div>
+                          <div class="input-group input-group-merge">
+                            <input
+                              type="password"
+                              id="newPassword"
+                              class="form-control"
+                              name="NewPassword"
+                              placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                              aria-describedby="password" onkeyup="verifyPassword();verifyRetypePassword();"
+                            />
+                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                          </div>
+                          <small id="resAuth-containNumber" class="d-block resAuth"></small>
+                          <small id="resAuth-upperLower" class="d-block resAuth"></small>
+                          <small id="resAuth-special" class="d-block resAuth"></small>
+                          <small id="resAuth-length" class="d-block resAuth"></small>
+                        </div>
+                        <div class="mb-3 form-password-toggle form-check">
+                          <div class="d-flex justify-content-between">
+                            <label class="form-label" for="newRetypePassword">Retype New Password</label>
+                          </div>
+                          <div class="input-group input-group-merge">
+                            <input
+                              type="password"
+                              id="newRetypePassword"
+                              class="form-control"
+                              name="RetypeNewPassword"
+                              placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                              aria-describedby="rpassword" onkeyup="verifyRetypePassword();"
+                            />
+                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                          </div>
+                          <small id="resAuth-retypePassword" class="d-block"></small>
+                        </div>
+                        <ul>
+                            <li class="text-muted mb-0"><small>At least 8 characters—the more characters, the better</small></li>
+                            <li class="text-muted mb-0"><small>A mixture of both uppercase and lowercase letters</small></li>
+                            <li class="text-muted mb-0"><small>A mixture of letters and numbers </small></li>
+                            <li class="text-muted mb-0"><small>Inclusion of at least one special character, e.g.,! @ # ? ]</small></li>
+                        </ul>
+                        <button type="submit" class="btn btn-primary" id="ChangeBtn">Change</button>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <h5 class="card-header">Delete Account</h5>
+                    <div class="card-body">
+                      <div class="mb-3 col-12 mb-0">
+                        <div class="alert alert-warning">
+                          <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your account?</h6>
+                          <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
+                        </div>
+                      </div>
+                      <form id="formAccountDeactivation" action="" method="post">
+                        {% csrf_token %}
+                        <div class="form-check mb-3">
+                            <label for="email1" class="form-label">your email</label>
+                            <input type="text" class="form-control" id="email1" name="Email"
+                                   placeholder="test@test.com" required>
+                          </div>
+                        <div class="form-check mb-3">
+                          <input class="form-check-input" type="checkbox" name="ConfirmAction" id="accountActivation" required>
+                          <label class="form-check-label" for="accountActivation">I confirm my account deactivation</label>
+                        </div>
+                        <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- / Content -->
+
+            {% include 'includes/footer.html' %}
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+{% endblock %}
+
+
+{% block footer_ref %}
+    <script src="{% static 'assets/js/pages-account-settings-account.js' %}"></script>
+{% endblock %}
