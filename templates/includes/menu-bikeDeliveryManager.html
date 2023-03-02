@@ -18,8 +18,9 @@
                         Portal
                     </a><ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
                         <li><a class="dropdown-item" href="{% url 'portal-main' %}">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="{% url 'portal-profile' %}">Profile</a></li>
                         <li><a class="dropdown-item" href="{% url 'portal-bikeDelivery' %}">Bike Delivery</a></li>
-                        <li><a class="dropdown-item" href="">Requests</a></li>
+                        <li><a class="dropdown-item" href="{% url 'portal-requests' %}">Requests</a></li>
                     </ul>
                     </li>
                     <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,7 +48,7 @@
                   <i class="bx bx-chevron-left bx-sm align-middle"></i>
                 </a>
               </div>
-
+              <div class="text-center mt-2">As <span class="text-primary">{{ Character }}</span></div>
               <div class="menu-inner-shadow"></div>
 
               <ul class="menu-inner py-1">
@@ -66,7 +67,7 @@
                   <span class="menu-header-text" style="font-size: 10px;">Manage Account</span>
                 </li>
 
-                <li class="menu-item {{ DashboardActive }} {{ RequestActive }} {{ BikeDeliveryActive }}" >
+                <li class="menu-item {{ DashboardActive }} {{ RequestsActive }} {{ BikeDeliveryActive }} {{ ProfileActive }}" >
                   <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-user"></i>
                     <div data-i18n="Account Settings">Portal</div>
@@ -77,13 +78,18 @@
                         <div data-i18n="Account">Dashboard</div>
                       </a>
                     </li>
+                    <li class="menu-item {{ ProfileActive }}">
+                      <a href="{% url 'portal-profile' %}" class="menu-link">
+                        <div data-i18n="Account">Profile</div>
+                      </a>
+                    </li>
                     <li class="menu-item {{ BikeDeliveryActive }}">
                       <a href="{% url 'portal-bikeDelivery' %}" class="menu-link">
                         <div data-i18n="Account">Bike Delivery</div>
                       </a>
                     </li>
-                    <li class="menu-item {{ RequestActive }}">
-                      <a href="{% url 'portal-main' %}" class="menu-link">
+                    <li class="menu-item {{ RequestsActive }}">
+                      <a href="{% url 'portal-requests' %}" class="menu-link">
                         <div data-i18n="Account">Requests</div>
                       </a>
                     </li>
