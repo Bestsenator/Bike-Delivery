@@ -1,6 +1,7 @@
 import random
 import secrets
 import jdatetime
+import pytz
 from django.db import models
 
 # Create your models here.
@@ -11,15 +12,15 @@ def getRandomInt():
 
 
 def getRandomToken():
-    return secrets.token_urlsafe(100)
+    return secrets.token_urlsafe(90)
 
 
 def getDatetime():
-    return str(jdatetime.datetime.today())
+    return jdatetime.datetime.now()
 
 
 def getFakeDateTime():
-    return str(jdatetime.datetime(1300, 1, 1))
+    return jdatetime.datetime(1300, 1, 1)
 
 
 class Customer(models.Model):
@@ -58,9 +59,11 @@ class BikeDeliveryManger(models.Model):
     Family = models.CharField(max_length=100)
     Email = models.CharField(max_length=100)
     Password = models.CharField(max_length=100, default='')
+    Language = models.CharField(max_length=10, default='EN')
     Phone = models.CharField(max_length=13)
     CountryCode = models.IntegerField(default=98)
     Session = models.CharField(max_length=120, default=getRandomToken)
+    ImagePath = models.CharField(max_length=100, default='')
     isActive = models.BooleanField(default=False)
 
 
