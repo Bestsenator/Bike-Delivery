@@ -8,8 +8,8 @@ Welcome to the Bike Delivery Project repository! This project is a management sy
 
 To view the project documentation in your preferred language, click on the links below:
 
-- [فارسی](./README.fa.md)
-- [English](./README.en.md)
+- [فارسی](./README_fa.md)
+- [English](./README_en.md)
 
 ## Contributors | برنامه نویسان
 
